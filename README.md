@@ -684,17 +684,8 @@ under GPL-3.0-only.
 
 No source code was copied. The relevant protocol behaviour was independently
 implemented in Python and verified against device captures and real hardware.
-See [`DARKMOUNT_REVIEW.md`](DARKMOUNT_REVIEW.md) for the detailed comparison.
 
-## Development and license
-
-- Contributions and safety boundaries: [`CONTRIBUTING.md`](CONTRIBUTING.md)
-- Private security reports: [`SECURITY.md`](SECURITY.md)
-- Changes: [`CHANGELOG.md`](CHANGELOG.md)
-- Release process and package verification:
-  [`docs/RELEASING.md`](docs/RELEASING.md)
-- Comparison and provenance of protocol findings:
-  [`DARKMOUNT_REVIEW.md`](DARKMOUNT_REVIEW.md)
+## License
 
 Copyright © 2026 `re133`. Released under
 [`GPL-3.0-only`](LICENSE), without warranty to the extent permitted by law.

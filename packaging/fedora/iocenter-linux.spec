@@ -50,7 +50,7 @@ udevadm control --reload-rules >/dev/null 2>&1 || :
 
 %files -f %{pyproject_files}
 %license LICENSE
-%doc README.md CHANGELOG.md DARKMOUNT_REVIEW.md
+%doc README.md
 %{_bindir}/iocenter-*
 %{_datadir}/applications/io.github.re133.iocenterlinux.desktop
 %{_datadir}/icons/hicolor/scalable/apps/io.github.re133.iocenterlinux.svg

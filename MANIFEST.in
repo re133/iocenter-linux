@@ -1,9 +1,5 @@
 include LICENSE
 include README.md
-include CHANGELOG.md
-include CONTRIBUTING.md
-include DARKMOUNT_REVIEW.md
-include SECURITY.md
 include config.example.toml
 include 70-iocenter-dark-mount.rules
 include bqprobe.py
@@ -12,6 +8,5 @@ include webhid_trace.js
 recursive-include data *.desktop *.svg *.xml
 recursive-include packaging *
 recursive-include debian *
-recursive-include docs *.md
 include test_*.py
 global-exclude __pycache__ *.py[cod]

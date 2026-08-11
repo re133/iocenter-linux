@@ -74,4 +74,3 @@ version = { attr = "bqmeta.VERSION" }
 "share/metainfo" = ["data/io.github.re133.iocenterlinux.metainfo.xml"]
 "share/iocenter-linux" = ["config.example.toml", "70-iocenter-dark-mount.rules"]
 "lib/udev/rules.d" = ["70-iocenter-dark-mount.rules"]
-"share/doc/iocenter-linux" = ["DARKMOUNT_REVIEW.md", "CHANGELOG.md"]
