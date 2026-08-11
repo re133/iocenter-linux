@@ -18,11 +18,13 @@ jobs:
     env:
       QT_QPA_PLATFORM: offscreen
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
           cache: pip
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y libegl1
       - run: python -m pip install --upgrade pip
       - run: python -m pip install .
       - run: python -m compileall -q -f .
@@ -34,8 +36,8 @@ jobs:
     env:
       QT_QPA_PLATFORM: offscreen
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
           cache: pip
@@ -74,7 +76,7 @@ jobs:
     env:
       QT_QPA_PLATFORM: offscreen
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: sudo apt-get update
       - run: >-
           sudo apt-get install -y python3-pyqt6 python3-pil libqt6svg6
@@ -87,7 +89,7 @@ jobs:
     env:
       QT_QPA_PLATFORM: offscreen
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: sudo apt-get update
       - run: >-
           sudo apt-get install -y build-essential debhelper dh-python
@@ -109,7 +111,7 @@ jobs:
       QT_QPA_PLATFORM: offscreen
     steps:
       - run: dnf install -y git tar gzip
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: >-
           dnf install -y python3 python3-pyqt6 python3-pillow qt6-qtsvg
           systemd-udev desktop-file-utils appstream rpm-build python3-devel
@@ -142,7 +144,7 @@ jobs:
       QT_QPA_PLATFORM: offscreen
     steps:
       - run: pacman -Syu --noconfirm --needed git
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: >-
           pacman -S --noconfirm --needed python python-pyqt6 python-pillow
           qt6-svg systemd desktop-file-utils appstream
@@ -150,4 +152,9 @@ jobs:
       - run: desktop-file-validate data/io.github.re133.iocenterlinux.desktop
       - run: appstreamcli validate --no-net data/io.github.re133.iocenterlinux.metainfo.xml
       - run: udevadm verify 70-iocenter-dark-mount.rules
-      - run: cd packaging/arch && makepkg --printsrcinfo -p PKGBUILD
+      - run: useradd --create-home builder
+      - run: chown -R builder:builder "$GITHUB_WORKSPACE"
+      - run: >-
+          runuser -u builder -- bash -c
+          "cd '$GITHUB_WORKSPACE/packaging/arch' &&
+          makepkg --printsrcinfo -p PKGBUILD"
