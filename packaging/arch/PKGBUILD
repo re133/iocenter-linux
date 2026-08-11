@@ -13,7 +13,7 @@ install=iocenter-linux.install
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
 # Release-Archive erst nach dem Erzeugen des Git-Tags verfügbar. Vor dem
 # AUR-Upload mit `updpkgsums` durch die echte Prüfsumme ersetzen.
-sha256sums=('SKIP')
+sha256sums=('bcad8635e76974ecdb98aa677555e4b977393825e902dbb9d24324041b897e30')
 
 build() {
   cd "$pkgname-$pkgver"
