@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME=iocenter-linux
+export QT_QPA_PLATFORM=offscreen
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_test:
+	python3 -m unittest discover -v
+	desktop-file-validate data/io.github.re133.iocenterlinux.desktop
+	appstreamcli validate --no-net data/io.github.re133.iocenterlinux.metainfo.xml
+	udevadm verify 70-iocenter-dark-mount.rules

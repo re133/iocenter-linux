@@ -1,0 +1,36 @@
+# Maintainer: re133
+pkgname=iocenter-linux
+pkgver=0.1.0
+pkgrel=1
+pkgdesc='Independent Linux control panel for the be quiet! Dark Mount'
+arch=('any')
+url='https://github.com/re133/iocenter-linux'
+license=('GPL-3.0-only')
+depends=('python' 'python-pyqt6>=6.6' 'python-pillow' 'qt6-svg' 'systemd')
+makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
+optdepends=('nvidia-utils: NVIDIA GPU utilization source')
+install=iocenter-linux.install
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+# Release-Archive erst nach dem Erzeugen des Git-Tags verfügbar. Vor dem
+# AUR-Upload mit `updpkgsums` durch die echte Prüfsumme ersetzen.
+sha256sums=('SKIP')
+
+build() {
+  cd "$pkgname-$pkgver"
+  python -m build --wheel --no-isolation
+}
+
+
+check() {
+  cd "$pkgname-$pkgver"
+  QT_QPA_PLATFORM=offscreen python -m unittest discover -v
+  desktop-file-validate data/io.github.re133.iocenterlinux.desktop
+  appstreamcli validate --no-net data/io.github.re133.iocenterlinux.metainfo.xml
+  udevadm verify 70-iocenter-dark-mount.rules
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

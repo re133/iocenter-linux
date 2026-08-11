@@ -1,0 +1,32 @@
+Source: iocenter-linux
+Section: utils
+Priority: optional
+Maintainer: re133 <32928830+re133@users.noreply.github.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-python,
+ pybuild-plugin-pyproject,
+ python3-all,
+ python3-setuptools (>= 68),
+ python3-wheel,
+ desktop-file-utils,
+ appstream,
+ udev
+Standards-Version: 4.7.2
+Homepage: https://github.com/re133/iocenter-linux
+Rules-Requires-Root: no
+
+Package: iocenter-linux
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3-pyqt6 (>= 6.6),
+ python3-pil (>= 10),
+ libqt6svg6,
+ udev
+Recommends: systemd
+Description: Linux control panel for the be quiet! Dark Mount
+ An independent community control panel for display-key images, Media Dock
+ settings, lighting, Linux shortcuts, and CPU/GPU load meters. Firmware and
+ bootloader operations are deliberately excluded.

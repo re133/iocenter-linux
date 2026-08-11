@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.re133.iocenterlinux</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+  <name>IO Center for Linux</name>
+  <name xml:lang="de">IO Center für Linux</name>
+  <summary>Control a be quiet! Dark Mount keyboard on Linux</summary>
+  <summary xml:lang="de">be quiet! Dark Mount unter Linux steuern</summary>
+  <description>
+    <p>
+      An independent community control panel for the be quiet! Dark Mount.
+      Configure display-key images, Media Dock settings, onboard lighting,
+      per-key LampArray colours, Linux shortcuts, and CPU/GPU load meters.
+    </p>
+    <p xml:lang="de">
+      Eine unabhängige Community-Oberfläche für die be quiet! Dark Mount.
+      Sie konfiguriert Display-Key-Bilder, Media-Dock-Einstellungen,
+      Onboard-Beleuchtung, einzelne LampArray-Farben, Linux-Kurzbefehle und
+      CPU-/GPU-Auslastungsanzeigen.
+    </p>
+    <p>
+      Firmware and bootloader operations are deliberately excluded. Firmware
+      updates remain the responsibility of the official vendor web app.
+    </p>
+    <p xml:lang="de">
+      Firmware- und Bootloader-Funktionen sind bewusst ausgeschlossen. Für
+      Firmware-Updates bleibt die offizielle Web-App des Herstellers zuständig.
+    </p>
+  </description>
+  <developer id="io.github.re133">
+    <name>re133</name>
+  </developer>
+  <launchable type="desktop-id">io.github.re133.iocenterlinux.desktop</launchable>
+  <provides>
+    <binary>iocenter-linux</binary>
+    <modalias>usb:v373Fp0001d*</modalias>
+  </provides>
+  <url type="homepage">https://github.com/re133/iocenter-linux</url>
+  <url type="bugtracker">https://github.com/re133/iocenter-linux/issues</url>
+  <categories>
+    <category>Settings</category>
+    <category>HardwareSettings</category>
+  </categories>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="0.1.0" date="2026-08-11">
+      <description>
+        <p>First public preview with guarded Dark Mount device controls.</p>
+      </description>
+    </release>
+  </releases>
+</component>

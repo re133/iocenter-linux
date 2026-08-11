@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iocenter-linux"
+dynamic = ["version"]
+description = "Independent Linux control panel for the be quiet! Dark Mount"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [
+  { name = "re133" },
+]
+keywords = ["linux", "keyboard", "hid", "rgb", "dark-mount"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: X11 Applications :: Qt",
+  "Intended Audience :: End Users/Desktop",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: System :: Hardware",
+]
+dependencies = [
+  "PyQt6>=6.6",
+  "Pillow>=10.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/re133/iocenter-linux"
+Issues = "https://github.com/re133/iocenter-linux/issues"
+
+[project.gui-scripts]
+iocenter-linux = "bqgui:main"
+
+[project.scripts]
+iocenter-keyd = "bqkeyd:main"
+iocenter-image = "bqimage:main"
+iocenter-dock = "bqdock:main"
+iocenter-light = "bqlight:main"
+iocenter-lamparray = "bqlamp:main"
+iocenter-meter = "bqmeter:main"
+iocenter-device = "bqdevice:main"
+
+[tool.setuptools]
+py-modules = [
+  "bqconfig",
+  "bqdevice",
+  "bqdock",
+  "bqgui",
+  "bqi18n",
+  "bqimage",
+  "bqkeyd",
+  "bqlamp",
+  "bqlight",
+  "bqlink",
+  "bqmeta",
+  "bqmeter",
+  "bqpaths",
+  "bqui",
+]
+
+[tool.setuptools.dynamic]
+version = { attr = "bqmeta.VERSION" }
+
+[tool.setuptools.data-files]
+"share/applications" = ["data/io.github.re133.iocenterlinux.desktop"]
+"share/icons/hicolor/scalable/apps" = ["data/io.github.re133.iocenterlinux.svg"]
+"share/metainfo" = ["data/io.github.re133.iocenterlinux.metainfo.xml"]
+"share/iocenter-linux" = ["config.example.toml", "70-iocenter-dark-mount.rules"]
+"lib/udev/rules.d" = ["70-iocenter-dark-mount.rules"]
+"share/doc/iocenter-linux" = ["DARKMOUNT_REVIEW.md", "CHANGELOG.md"]

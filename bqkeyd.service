@@ -1,0 +1,29 @@
+[Unit]
+Description=be quiet! Dark Mount Display-Key-Daemon
+Documentation=https://github.com/re133/iocenter-linux
+
+# Beispiel für ein natives Paket. Die GUI erzeugt bei „Autostart aktivieren“
+# eine User-Unit mit den tatsächlichen Pfaden des installierten Programms und
+# der XDG-Konfiguration.
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/iocenter-keyd
+Restart=always
+RestartSec=3
+
+# Der Daemon oeffnet das HID-Interface nur lesend und braucht keinerlei
+# erweiterte Rechte. Zugriff kommt allein ueber die uaccess-ACL der
+# udev-Regel 70-iocenter-dark-mount.rules.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX
+MemoryDenyWriteExecute=true
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,32 @@
+# Beispielkonfiguration. Für den ersten Start nach config.toml kopieren.
+
+[ui]
+# Wird beim ersten Start aus der Desktop-Sprache erkannt und kann danach in
+# der Oberfläche als "de" oder "en" gespeichert werden.
+
+[uinput]
+enabled = true
+
+[keys.key1]
+key = "F13"
+
+[keys.key2]
+key = "F14"
+
+[keys.key3]
+key = "F15"
+
+[keys.key4]
+key = "F16"
+
+[keys.key5]
+key = "F17"
+
+[keys.key6]
+key = "F18"
+
+[keys.key7]
+key = "F19"
+
+[keys.key8]
+key = "F20"

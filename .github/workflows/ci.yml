@@ -1,0 +1,153 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: Python ${{ matrix.python }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13", "3.14"]
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install .
+      - run: python -m compileall -q -f .
+      - run: python -m unittest discover -v
+
+  metadata-and-build:
+    name: Linux metadata and wheel
+    runs-on: ubuntu-latest
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y appstream desktop-file-utils systemd
+      - run: desktop-file-validate data/io.github.re133.iocenterlinux.desktop
+      - run: appstreamcli validate --no-net data/io.github.re133.iocenterlinux.metainfo.xml
+      - run: udevadm verify 70-iocenter-dark-mount.rules
+      - run: python -m pip install build
+      - run: python -m build
+      - name: Verify wheel payload
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          wheel = next(Path("dist").glob("*.whl"))
+          with ZipFile(wheel) as archive:
+              names = archive.namelist()
+          forbidden = [
+              name for name in names
+              if "__pycache__" in name or name.endswith((".pyc", ".pyo"))
+          ]
+          assert not forbidden, f"bytecode leaked into wheel: {forbidden}"
+          assert "bqprobe.py" not in names, "experimental probe leaked into wheel"
+          print(f"verified {wheel}: {len(names)} files")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-dist
+          path: dist/*
+
+  ubuntu-system-packages:
+    name: Ubuntu system packages
+    runs-on: ubuntu-latest
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update
+      - run: >-
+          sudo apt-get install -y python3-pyqt6 python3-pil libqt6svg6
+          appstream desktop-file-utils systemd
+      - run: python3 -m unittest discover -v
+
+  debian-package:
+    name: Debian/Ubuntu package
+    runs-on: ubuntu-latest
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update
+      - run: >-
+          sudo apt-get install -y build-essential debhelper dh-python
+          pybuild-plugin-pyproject python3-all python3-setuptools python3-wheel
+          python3-pyqt6 python3-pil libqt6svg6 appstream desktop-file-utils
+          udev
+      - run: dpkg-buildpackage --build=binary --no-sign
+      - run: mkdir -p artifacts && cp ../iocenter-linux_*.deb artifacts/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: debian-package
+          path: artifacts/*.deb
+
+  fedora-system-packages:
+    name: Fedora system packages
+    runs-on: ubuntu-latest
+    container: fedora:43
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - run: dnf install -y git tar gzip
+      - uses: actions/checkout@v4
+      - run: >-
+          dnf install -y python3 python3-pyqt6 python3-pillow qt6-qtsvg
+          systemd-udev desktop-file-utils appstream rpm-build python3-devel
+          python3-build python3-installer python3-setuptools python3-wheel
+          python3-rpm-macros pyproject-rpm-macros
+      - run: python3 -m unittest discover -v
+      - run: desktop-file-validate data/io.github.re133.iocenterlinux.desktop
+      - run: appstreamcli validate --no-net data/io.github.re133.iocenterlinux.metainfo.xml
+      - run: udevadm verify 70-iocenter-dark-mount.rules
+      - name: Build RPM
+        run: |
+          rpmroot="$RUNNER_TEMP/iocenter-rpmbuild"
+          version="$(python3 -c 'import bqmeta; print(bqmeta.VERSION)')"
+          mkdir -p "$rpmroot"/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+          tar --exclude=.git --exclude=build --exclude=dist \
+            --transform "s,^,iocenter-linux-$version/," \
+            -czf "$rpmroot/SOURCES/iocenter-linux-$version.tar.gz" .
+          rpmbuild -ba --define "_topdir $rpmroot" \
+            packaging/fedora/iocenter-linux.spec
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fedora-package
+          path: ${{ runner.temp }}/iocenter-rpmbuild/RPMS/**/*.rpm
+
+  arch-system-packages:
+    name: Arch Linux system packages
+    runs-on: ubuntu-latest
+    container: archlinux:base-devel
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - run: pacman -Syu --noconfirm --needed git
+      - uses: actions/checkout@v4
+      - run: >-
+          pacman -S --noconfirm --needed python python-pyqt6 python-pillow
+          qt6-svg systemd desktop-file-utils appstream
+      - run: python -m unittest discover -v
+      - run: desktop-file-validate data/io.github.re133.iocenterlinux.desktop
+      - run: appstreamcli validate --no-net data/io.github.re133.iocenterlinux.metainfo.xml
+      - run: udevadm verify 70-iocenter-dark-mount.rules
+      - run: cd packaging/arch && makepkg --printsrcinfo -p PKGBUILD

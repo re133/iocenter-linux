@@ -1,0 +1,7 @@
+# be quiet! Dark Mount (373f:0001): Zugriff nur für die aktive Desktop-Sitzung.
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="373f", ATTRS{idProduct}=="0001", TAG+="uaccess"
+
+# Optional für virtuelle F13–F24-Tasten. uinput ermöglicht generell das
+# Erzeugen virtueller Eingaben und sollte deshalb nicht mit MODE="0666"
+# freigegeben werden; uaccess beschränkt es auf den aktiven Sitzbenutzer.
+SUBSYSTEM=="misc", KERNEL=="uinput", TAG+="uaccess", OPTIONS+="static_node=uinput"

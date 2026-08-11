@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: iocenter-linux
+Source: https://github.com/re133/iocenter-linux
+
+Files: *
+Copyright: 2026 re133
+License: GPL-3.0-only
+
+License: GPL-3.0-only
+ On Debian systems, the complete text of the GNU General Public License
+ version 3 is available at /usr/share/common-licenses/GPL-3.

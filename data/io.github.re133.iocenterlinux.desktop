@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=IO Center for Linux
+Name[de]=IO Center für Linux
+Comment=Control a be quiet! Dark Mount keyboard
+Comment[de]=be quiet! Dark Mount unter Linux steuern
+Exec=iocenter-linux
+Icon=io.github.re133.iocenterlinux
+Terminal=false
+Categories=Settings;HardwareSettings;
+Keywords=keyboard;lighting;RGB;Dark Mount;be quiet;HID;
+Keywords[de]=Tastatur;Beleuchtung;RGB;Dark Mount;be quiet;HID;
+StartupNotify=true

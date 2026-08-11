@@ -1,0 +1,31 @@
+__pycache__/
+*.py[cod]
+
+# Persönliche Belegung und vom eigenen Gerät gelesene Bilder
+config.toml
+extracted/
+
+# Nur lokale Vergleichsquelle; nicht Teil dieses Projekts
+darkmount-linux-main.zip
+
+# Editor-/Testreste
+.pytest_cache/
+.ruff_cache/
+*.log
+
+# Python-/Paket-Builds
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+*.whl
+*.tar.gz
+*.pkg.tar.*
+*.deb
+*.rpm
+
+# Arch-Paketbau
+packaging/arch/pkg/
+packaging/arch/src/
+packaging/arch/*.tar.*
