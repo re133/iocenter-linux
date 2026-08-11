@@ -696,7 +696,7 @@ long update intervals would be sensible.
 
 Parts of the protocol research—particularly Media Dock image readback, device
 information, and explicit QLink session setup—were informed by
-[`fbnlrz/darkmount-linux`](https://github.com/fbnlrz/darkmount-linux), licensed
+[fbnlrz](https://github.com/fbnlrz/darkmount-linux), licensed
 under GPL-3.0-only.
 
 No source code was copied. The relevant protocol behaviour was independently
