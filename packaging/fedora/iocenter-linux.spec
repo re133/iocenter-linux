@@ -14,7 +14,7 @@ BuildRequires:  python3-installer
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-wheel
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  systemd-udev
 Requires:       python3-pyqt6 >= 6.6
 Requires:       python3-pillow >= 10
@@ -39,7 +39,7 @@ and CPU/GPU load meters. Firmware operations are deliberately excluded.
 %check
 QT_QPA_PLATFORM=offscreen %{python3} -m unittest discover -v
 desktop-file-validate data/io.github.re133.iocenterlinux.desktop
-appstream-util validate-relax --nonet data/io.github.re133.iocenterlinux.metainfo.xml
+appstreamcli validate --no-net data/io.github.re133.iocenterlinux.metainfo.xml
 udevadm verify 70-iocenter-dark-mount.rules
 
 %post
