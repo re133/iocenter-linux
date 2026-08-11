@@ -1,26 +1,26 @@
-# Mitwirken
+# Contributing
 
-Danke für dein Interesse an IO Center für Linux. Fehlerberichte, getestete
-Geräteinformationen, Übersetzungen und kleine, gut belegte Verbesserungen sind
-willkommen.
+Thank you for your interest in IO Center for Linux. Bug reports, verified
+device information, translations, and small, well-supported improvements are
+welcome.
 
-## Sicherheitsgrenze
+## Safety boundary
 
-Gerätekommandos werden nur aufgenommen, wenn sie durch mindestens eine
-nachvollziehbare Quelle belegt und anschließend am Gerät mit engen Grenzen
-verifiziert wurden. Unbekannte Kommandos, Firmware-/DFU-Funktionen und
-Bootloader-Eingriffe gehören nicht in dieses Projekt. Eine vermutete Bedeutung
-ist kein ausreichender Beleg.
+Device commands are accepted only when they are documented by at least one
+traceable source and subsequently verified on real hardware with strict
+bounds. Unknown commands, firmware or DFU functionality, and bootloader
+operations do not belong in this project. A presumed meaning is not sufficient
+evidence.
 
-Jedes schreibende Gerätekommando benötigt:
+Every device command that writes data requires:
 
-- eine explizite Positivliste,
-- harte Grenzen für IDs, Offsets und Nutzlastgrößen,
-- eine Sicherung, sofern bestehende Benutzerdaten ersetzt werden,
-- Rücklesen und Verifikation, soweit das Protokoll dies erlaubt,
-- einen Test für ungültige oder abgeschnittene Antworten.
+- an explicit allowlist;
+- strict bounds for IDs, offsets, and payload sizes;
+- a backup whenever existing user data is replaced;
+- readback and verification wherever the protocol permits it;
+- a test covering invalid or truncated responses.
 
-## Lokale Prüfung
+## Local verification
 
 ```bash
 python3 -m pip install --user -r requirements.txt
@@ -31,14 +31,14 @@ appstreamcli validate --no-net data/io.github.re133.iocenterlinux.metainfo.xml
 udevadm verify 70-iocenter-dark-mount.rules
 ```
 
-Hardwaretests bitte mit Modell, Firmware-Version, Distribution, Desktop und
-genauem Ergebnis dokumentieren. Seriennummern und persönliche Tastenkommandos
-nicht in Issues oder Logs veröffentlichen.
+Please document hardware tests with the model, firmware version, Linux
+distribution, desktop environment, and exact result. Do not publish serial
+numbers or personal key commands in issues or logs.
 
-## Stil
+## Style
 
-- Kleine, überprüfbare Änderungen bevorzugen.
-- Deutsch ist die Quellsprache der Oberfläche; neue sichtbare Texte brauchen
-  einen englischen Eintrag in `bqi18n.py`.
-- Keine festen `hidraw`-Nummern oder Home-Verzeichnisse verwenden.
-- Benutzerdaten gehören ausschließlich in die XDG-Verzeichnisse.
+- Prefer small, reviewable changes.
+- German is the source language of the interface; every new user-visible
+  string needs an English entry in `bqi18n.py`.
+- Do not use fixed `hidraw` numbers or home-directory paths.
+- User data belongs exclusively in the XDG directories.

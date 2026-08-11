@@ -1,21 +1,22 @@
-# Sicherheitsrichtlinie
+# Security policy
 
-## Unterstützte Versionen
+## Supported versions
 
-Bis zum ersten stabilen Release wird ausschließlich der aktuelle Stand des
-Hauptbranches unterstützt.
+Until the first stable release, only the latest published preview and the
+current state of the `main` branch are supported.
 
-## Sicherheitsproblem melden
+## Reporting a vulnerability
 
-Bitte veröffentliche Schwachstellen mit möglichem Geräte-, Befehls- oder
-Berechtigungsrisiko nicht sofort als öffentliches Issue. Nutze bevorzugt eine
-private GitHub Security Advisory. Falls das noch nicht möglich ist, kontaktiere
-`fechyyyyy` über Discord und teile zunächst keine Seriennummern, privaten
-Kommandos oder vollständigen Systemprotokolle.
+Please do not immediately open a public issue for vulnerabilities that could
+affect the device, command execution, or permissions. Prefer a private GitHub
+Security Advisory. If that is not yet possible, contact `fechyyyyy` on Discord
+and initially avoid sharing serial numbers, private commands, or complete
+system logs.
 
-Hilfreich sind Version, Distribution, Firmware-Version, betroffene Funktion,
-reproduzierbare Schritte und die Frage, ob tatsächlich auf das Gerät
-geschrieben wurde.
+Useful details include the application version, Linux distribution, firmware
+version, affected feature, reproducible steps, and whether data was actually
+written to the device.
 
-Firmware-, DFU- und Bootloader-Probleme der Hersteller-Software liegen
-außerhalb dieses Projekts und müssen an den Hersteller gemeldet werden.
+Problems involving firmware, DFU, or the bootloader in the manufacturer's
+software are outside the scope of this project and must be reported to the
+manufacturer.
