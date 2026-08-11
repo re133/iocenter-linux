@@ -5,7 +5,7 @@ include 70-iocenter-dark-mount.rules
 include bqprobe.py
 include dock_test.py
 include webhid_trace.js
-recursive-include data *.desktop *.svg *.xml
+recursive-include data *.desktop *.svg *.xml *.png
 recursive-include packaging *
 recursive-include debian *
 include test_*.py

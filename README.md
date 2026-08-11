@@ -17,6 +17,23 @@ Current preview version: **0.1.0** · License: **GPL-3.0-only**
 
 Contact: **`fechyyyyy` on Discord**
 
+## Screenshots
+
+The interface follows the desktop palette automatically. These captures show
+the current application in a dark Linux theme.
+
+<p align="center">
+  <img src="data/screenshots/keys-dark.png" width="100%"
+       alt="Display key assignments in the dark interface">
+</p>
+
+<p align="center">
+  <img src="data/screenshots/media-dock-dark.png" width="49%"
+       alt="Media Dock controls in the dark interface">
+  <img src="data/screenshots/lighting-dark.png" width="49%"
+       alt="Lighting and CPU/GPU load meter controls in the dark interface">
+</p>
+
 ## Safety rule
 
 **Firmware functionality is documented, but never implemented, invoked, or
