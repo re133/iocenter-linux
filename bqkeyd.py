@@ -54,8 +54,12 @@ VENDOR_ID = "373F"
 #   byte 2     Session-/Verbindungszaehler
 #   byte 5,6   Event-Kennung -- 0x11 0x02 = Display-Key, 0x01 0x03 = Heartbeat
 #   byte 7     Tasten-ID (0x6d..0x74 fuer die 8 Display Keys)
-#   byte 9     0x01 = gedrueckt
-#   byte 10,11 hinterlegte Aktion aus der Web-App (0x00 0x00 = keine)
+#   byte 9     0x01 = Aktion von der Tastatur selbst erledigt (z.B. Helligkeit),
+#              0x00 = Host muss die Aktion ausfuehren (Datei/URL/Profil).
+#              Beides ist ein vollstaendiger Tastendruck; ein Loslassen wird
+#              nicht separat gemeldet.
+#   byte 10    Aktionstyp (0x00 Standard, 0x05 Datei, 0x06 URL, 0x09 Backlight, ...)
+#   byte 11    Aktion/Laenge der Nutzlast ab byte 12
 #   letzte 2   Pruefsumme
 EVT_KEY = (0x11, 0x02)
 
@@ -171,8 +175,13 @@ def open_vendor_node(retry_forever=False):
 
 
 def parse_event(data):
-    """Gibt (key_id, action_bytes) zurueck oder None."""
-    if len(data) < 12 or (data[5], data[6]) != EVT_KEY or data[9] != 0x01:
+    """Gibt (key_id, action_bytes) zurueck oder None.
+
+    Ein 0x11/0x02-Rahmen ist genau ein Tastendruck -- gleichgueltig, ob die
+    Tastatur die Aktion selbst erledigt (byte 9 = 0x01) oder der Host sie
+    ausfuehren soll (byte 9 = 0x00). Ein Loslassen wird nicht gemeldet.
+    """
+    if len(data) < 12 or (data[5], data[6]) != EVT_KEY:
         return None
     return data[7], (data[10], data[11])
 
