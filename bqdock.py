@@ -230,7 +230,9 @@ class Dock:
         """
         payload, _frame = self.link.read_notification(
             CMD_SETTINGS_WRITE,
-            predicate=lambda frame: frame[4] == 0 and frame[7] == 0x04,
+            # Das erste Nutzbyte variiert (0x04, 0x08, 0x0c, ...), vermutlich
+            # ein Zähler. Die übernommene Zeit steht immer ab Byte 8.
+            predicate=lambda frame: frame[4] == 0,
             timeout=timeout)
         if payload is None or len(payload) < 5:
             return None
