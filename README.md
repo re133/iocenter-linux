@@ -506,6 +506,26 @@ The interface therefore confirms success through the device response rather
 than the screen—for example, by showing the confirmed time in the status line
 after setting the clock.
 
+### Display timeout disables the volume wheel
+
+Firmware 1.31.0 has a defect that this interface can trigger. Once the dock
+switches its display off after the configured timeout, the **volume wheel
+stops sending HID reports**. Mute, Play/Pause and the navigation buttons keep
+working, and the wheel stays silent until the dock is detached and attached
+again. A USB replug, `unbind`/`bind` or `USBDEVFS_RESET` does not help—none of
+them power-cycles the dock itself.
+
+The trigger is the stored `off_seconds` field of `21 02`/`21 03` (bytes 5–8).
+With `off_seconds = 60` the wheel worked for roughly 60 s after each dock
+power cycle and then fell silent; with `off_seconds = 0` (“Display off after:
+never”, checkbox cleared) it still worked 198 s after the last interaction.
+Because the setting is stored in the dock, it survives reboots and replugs,
+and the GUI only becomes a trigger when **“Apply settings”** writes it.
+
+The GUI shows a warning above the checkbox as soon as a display timeout is
+enabled. Clear the checkbox, apply the settings, and reattach the dock once to
+wake the encoder.
+
 ### Device access
 
 A udev rule assigns ACLs to the required HID interfaces through the `uaccess`

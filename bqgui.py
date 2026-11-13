@@ -1595,11 +1595,19 @@ class DockPage(QWidget):
         self.off_spin.setRange(1, 3600)
         self.off_spin.setSuffix(" s")
         self.off_check.toggled.connect(self.off_spin.setEnabled)
+        self.off_check.toggled.connect(self.update_off_warning)
         off_row.addWidget(self.off_check)
         off_row.addWidget(self.off_spin)
         off_row.addStretch(1)
         form.addRow(tr("Display ausschalten"), off_row)
         right.addLayout(form)
+        self.off_warning = hint(tr(
+            "Mit Firmware 1.31.0 sendet das Lautstärkerad keine Ereignisse "
+            "mehr, sobald das Display ausgeschaltet ist. Erst Abnehmen und "
+            "Wiederaufsetzen des Docks weckt es erneut. Das Häkchen daher "
+            "besser entfernt lassen."))
+        self.off_warning.setVisible(False)
+        right.addWidget(self.off_warning)
         right.addWidget(hint(tr(
             "Sobald ein Rechner mit dem Dock spricht, zeigt es sein Menü. "
             "Uhr und Bild erscheinen erst wieder als Leerlaufanzeige, nach "
@@ -1631,12 +1639,18 @@ class DockPage(QWidget):
 
     # ---- Einstellungen ----
 
+    def update_off_warning(self, _checked=None):
+        """Warnung nur zeigen, solange die Abschaltung aktiv ist."""
+        self.off_warning.setVisible(
+            self.off_check.isChecked() and self.off_check.isEnabled())
+
     def set_settings_enabled(self, enabled):
         for widget in (self.colour_button, self.radio_clock, self.radio_image,
                        self.radio_24, self.radio_12, self.idle_spin,
                        self.off_check, self.save_button):
             widget.setEnabled(enabled)
         self.off_spin.setEnabled(enabled and self.off_check.isChecked())
+        self.update_off_warning()
 
     def load_settings(self):
         self.reload_button.setEnabled(False)

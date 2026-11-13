@@ -456,6 +456,7 @@ ENGLISH = {
     'Uhr auf %s gestellt — keine Bestätigung erhalten.': 'Clock set to %s — no confirmation received.',
     'Uhr auf %s gestellt, Gerät meldet %s.': 'Clock set to %s, device reports %s.',
     'Sobald ein Rechner mit dem Dock spricht, zeigt es sein Menü. Uhr und Bild erscheinen erst wieder als Leerlaufanzeige, nach der eingestellten Wartezeit ohne Bedienung. Zum Ausprobieren die Wartezeit kurz auf wenige Sekunden stellen.': 'As soon as a computer talks to the dock, it shows its menu. Clock and image only reappear as the idle display, after the configured delay without input. To try it out, set the delay to a few seconds.',
+    'Mit Firmware 1.31.0 sendet das Lautstärkerad keine Ereignisse mehr, sobald das Display ausgeschaltet ist. Erst Abnehmen und Wiederaufsetzen des Docks weckt es erneut. Das Häkchen daher besser entfernt lassen.': 'With firmware 1.31.0 the volume wheel stops sending events as soon as the display is switched off. Only detaching and reattaching the dock wakes it again, so it is better to leave the checkbox cleared.',
 
     # -- Sprache
     "Sprache": "Language",
